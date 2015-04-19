@@ -1,0 +1,161 @@
+html {
+	height: 100%;
+}
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background-color: #eeeeff;
+}
+
+.page {
+	height: 100%;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	//background-color: #4c5d7f;
+}
+
+.panel {
+	//background-color: #4c5d7f;
+	//color: #eeffee;
+	//max-width: 800px;
+	//margin:0px auto;
+}
+
+.file {
+    position: absolute;
+	left: 1px;
+	top: 1px;
+	width: 49px;
+	height: 44px;
+    opacity: 0.00;
+}
+
+
+.timelabel {
+	font-size: 11px;
+	//text-align: left;
+}
+
+.chat {
+	max-width: 800px;
+	margin:0px auto;
+}
+
+.field {
+	max-width: 500px;
+	margin:0px auto;
+}
+
+.chat_header {
+	height: 43px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right:5px;
+	background-color: #2a80b9;
+}
+
+.chat_content {
+	overflow-y: auto; /* прокрутка по вертикали */
+	height: 100%;
+	background-color: #394f66;
+}
+
+.chat_footer {
+	height: 57px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right:5px;
+	background-color: #2c3d4f;
+	float: center;   
+    text-align: center; 
+}
+
+.chat_title {
+  color: #808080;
+}
+
+.chat_message_title {
+  color: #808080;
+}
+
+.chat_message_to {
+  color: #F02020;
+}
+
+.msg {
+  color: #808080;
+}
+
+.bubble{
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0 0 6px #B2B2B2;
+    padding: 5px 18px;
+    position: relative;
+    vertical-align: top;
+    word-break: break-all;
+  margin-left:18px;
+  margin-right:18px;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.bubble::before {
+    background-color: #FFFFFF;
+    content: "\00a0";
+    display: block;
+    height: 16px;
+    position: absolute;
+    top: 11px;
+    transform:             rotate( 29deg ) skew( -35deg );
+        -moz-transform:    rotate( 29deg ) skew( -35deg );
+        -ms-transform:     rotate( 29deg ) skew( -35deg );
+        -o-transform:      rotate( 29deg ) skew( -35deg );
+        -webkit-transform: rotate( 29deg ) skew( -35deg );
+    width:  20px;
+
+}
+
+.me {
+    float: center;   
+    text-align: right;
+	background-color: #1eb9bd;
+	color: #ffffff; 	
+}
+
+.me_icon {
+    float: right;   
+    margin: 5px 10px 5px 5px;
+    text-align: right;    
+}
+
+.you::before {
+    box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
+    left: -9px;
+	background-color: #ffffff;
+}
+
+.you {
+    float: center;    
+    text-align: left;
+	background-color: #ffffff;
+	color: #000000; 	
+}
+
+.you_icon {
+    float: left;    
+    margin: 5px 10px 5px 5px;
+    text-align: left;          
+}
+
+.me::before {
+    box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
+    right: -9px; 
+	background-color: #1eb9bd;	
+}

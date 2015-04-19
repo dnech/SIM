@@ -1,0 +1,46 @@
+---------------------------------------------------------------
+                         CRYPTON
+---------------------------------------------------------------
+TASKS
+
+{
+	'event': 'task',
+	'data': {
+		'function': 	function,
+		'parameters': 	parameters,
+		'callback': 	callback,
+		'success': 		undefined,
+		'return': 		undefined,
+	}
+}
+
+EVENTS
+{
+	'event': 'error',
+	'data': {
+		'module':	'crypton', 
+		'code': 	code,
+		'message':	message,		
+		'source':	source,
+	}
+}
+{
+	'event': 'generate',
+	'data': {
+		'publicKey': RSApublicKey,
+		'publicKeyID': RSApublicKeyID,
+	}
+}
+{
+	'event': 'destroy',
+	'data': {
+		'publicKey': RSApublicKey,
+		'publicKeyID': RSApublicKeyID,
+	}
+}
+ERRORS:
+10, 'unknow', e							// task
+11, 'function is not available', task	// task
+12, 'no function', task					// task
+13, 'error in function', task			// task
+20, 'unknow', e							// generate key

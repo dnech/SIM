@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chat</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="css/chat.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="js/jquery.cookie.js"></script>
+	<script src="js/crypt.js"></script> 
+	<script src="js/main.js"></script> 	
+ </head>
+<body>
+	<!-- Chat -->
+	<div class="chat">
+		<!-- Login -->
+		<div class="chat_login">	
+			<div class="container">
+				<h2 class="form-signin-heading">Вход в чат</h2>
+				<div class="input-group">
+				    <input id="chat_login_tag"  value="Комната1" type="login" class="form-control" placeholder="Комната" required>
+					<span class="input-group-addon">
+						<input id="check_tag" type="checkbox">
+					</span>
+				</div><!-- /input-group -->
+				<div class="input-group">
+				    <input id="chat_login_pass" type="password" class="form-control" placeholder="Ключ шифрования комнаты" required></br>
+					<span class="input-group-addon">
+						<input id="check_pass" type="checkbox">
+					</span>
+				</div>
+				<div class="input-group">
+				    <input id="chat_login_name" type="login" class="form-control" placeholder="Псевдоним пользователя" required autofocus>
+					<span class="input-group-addon">
+						<input id="check_name" type="checkbox">
+					</span>
+				</div>
+				<br>
+				<button class="btn btn-lg btn-primary btn-block" onclick="ShowChat();">Вход</button><br>
+				<div id="chat_login_debuge" style="hide" class="alert alert-danger" role="alert"></div>
+			</div>
+		</div>
+		<!-- Messages -->
+		<div class="chat_header">
+			<a class="navbar-brand chat_title" href="#"  onclick="ShowSettings(true);"></a><br><a href="#" onclick="DelMessages(0);">Стереть историю</a>
+		</div>
+		<!-- Content -->
+		<div class="chat_content"></div>
+		<!-- Footer -->
+		<div class="chat_footer">
+			<table width='100%'><tr>
+			<td><textarea style="width: 99%; height: 76px;" id="chat_message"></textarea></td>
+			<td width='92px'><button style="width: 85px; height: 76px;" onclick="SetMessage();">Отправить</button></td>
+			<td width='92px'><input id="filefild" type="file" name="file" multiple="multiple" title="Отправить файлы"/></td>
+			</tr></table>
+		</div>
+	</div>				
+</body>
+</html>

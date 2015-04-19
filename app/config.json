@@ -1,0 +1,21 @@
+{
+    "server":{
+        "secure": true,
+        "bind": "0.0.0.0",
+        "port": 443,
+        "key":  "app/keys/https.key",
+        "cert": "app/keys/https.pem",
+		"public": "../public"
+    },
+    "log":{
+        "console":{
+            "enable":true,
+            "level":"debug"
+        },
+        "file":{
+            "enable":true,
+            "filename":"debug.log",
+            "level":"info"
+        }
+    }
+}

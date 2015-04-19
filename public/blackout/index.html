@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>BlackOut: Worker</title>
+	<!--------------------VENDOR------------------------->
+	<link rel="stylesheet" href="vendor/jquery/jquery.mobile-1.4.4.min.css">
+	<script language="JavaScript" type="text/javascript" src="vendor/jquery/jquery-1.11.1.min.js"></script>
+	<script language="JavaScript" type="text/javascript" src="vendor/jquery/jquery.mobile-1.4.4.min.js"></script>
+	<script language="JavaScript" type="text/javascript" src="vendor/qrcode/qrcode.js"></script>
+	<script language="JavaScript" type="text/javascript" src="vendor/cryptico/hash.js"></script>
+	<script language="JavaScript" type="text/javascript" src="vendor/cryptico/b64.js"></script>
+	<script language="JavaScript" type="text/javascript" src="vendor/zlib/gunzip.min.js"></script>
+	<script language="JavaScript" type="text/javascript" src="vendor/zlib/gzip.min.js"></script>
+	<!-----------------APPLICATION----------------------->
+	<link rel="stylesheet" href="css/backout.css">
+	<script language="JavaScript" type="text/javascript" src="js/app/blackcore.js"></script>
+	<script language="JavaScript" type="text/javascript" src="js/app.js"></script>
+</head>
+<body>
+
+<!-----------------------------------------------------------------------------------------------------------------------------------
+                                                          PAGE: LOGIN
+------------------------------------------------------------------------------------------------------------------------------------>
+<div data-role="page" id="page_login">
+  <div data-role="header"  data-position="fixed">
+	<a href="#page_settings" class="ui-btn ui-corner-all ui-shadow ui-icon-gear ui-btn-icon-left"  data-transition="slide"  data-direction="reverse">Настройки</a>
+	<h1>Ключи</h1>
+	<a href="#page_contacts" data-icon="user" data-iconpos="notext" class="ui-link ui-btn-right ui-btn ui-icon-user ui-btn-icon-left ui-shadow ui-corner-all" data-role="button" role="button" data-transition="slide">Контакты</a>
+  </div>
+  <div data-role="main" class="ui-content">
+		<!-----------------BLOCK GENERATE-------------------------->
+		<div id="ui_key_generate" data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all">
+			<div class="ui-field-contain">
+				<label for="fname">Псевдоним</label>
+				<input type="text" name="fname" id="name" value="BlackOut">
+			</div>
+			
+			<div class="ui-field-contain">
+				<label for="fpass" onclick="genPass(56);">Пароль</label>
+				<input type="text" name="fpass" id="pass">
+			</div>
+			
+			
+			
+			<div class="ui-grid-a ui-responsive">
+				<div class="ui-block-a"><input id="btn_keygen" type="button" onclick="genKey();" value="Создать ключи" data-icon="recycle"></div>
+				<!--<div class="ui-block-b"><input type="button" onclick="genKey();" value="Получить из контейнера" data-icon="eye"></div>-->
+				<div class="ui-block-b"><a href="#myPopupDialog" data-icon="eye" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn ui-corner-all ui-shadow ui-icon-eye ui-btn-icon-left">Получить из контейнера</a></div>
+			</div>
+			
+			<div data-role="footer" data-position="fixed">
+				<a href="#page_settings" data-icon="gear" data-iconpos="notext" class="ui-link ui-btn-right ui-btn ui-icon-gear ui-btn-icon-notext ui-shadow ui-corner-all" data-role="button" role="button" data-transition="slide" >Настройки</a>
+			</div>
+		</div>
+		
+		<!-----------------BLOCK EDIT-------------------------->
+		<div id="ui_key_edit" data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all" style="display: none;">
+			<div class="ui-grid-solo">
+				<div class="ui-block-solo"><a onclick="ClearKey();" class="ui-btn ui-corner-all ui-icon-forbidden ui-btn-icon-left">Очистить ключи</a></div>
+			</div>
+			<label>Псевдоним</label>
+			<input type="text" id="view_name">
+			<label>Публичный ключ</label>
+			<textarea id="view_publickey" wrap="soft"></textarea>
+			<label>Хэш публичного ключа</label>
+			<input type="text" id="view_publickeyid">
+			<center><div id="ui_qrcode" class="qrcode"></div></center>	
+		</div>
+		
+		<!-----------------BLOCK POPUP CONTEINER EDIT-------------------------->
+		<div data-role="popup" id="myPopupDialog" data-close-btn="right">
+			<div data-role="header">
+				<h1>Контейнер</h1>
+			</div>
+			<div data-role="main" class="ui-content">
+				<div class="ui-grid-solo">
+					<div class="ui-block-a"><textarea rows="8" name="keybox" id="keybox"></textarea></div>
+				</div>
+				<div class="ui-grid-solo">
+					<div class="ui-block-a"><a href="#" class="ui-btn ui-corner-all ui-btn-b ui-icon-back ui-btn-icon-left" data-rel="back">Загрузить</a></div>
+				</div>
+			</div>
+		</div>
+  </div>
+</div>
+
+<!-----------------------------------------------------------------------------------------------------------------------------------
+                                                       PAGE: SETTINGS
+------------------------------------------------------------------------------------------------------------------------------------>
+<div data-role="page" id="page_settings">
+  <div data-role="header" data-position="fixed">
+	<h1>Настройки</h1>
+	<a href="#page_login" class="ui-btn ui-btn-right ui-corner-all ui-shadow ui-icon-star ui-btn-icon-left"  data-transition="slide">Ключи</a>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <h3>Настройки шифрования</h3>
+	<ul data-role="listview" data-inset="true">
+        <li data-role="fieldcontain">
+            <label for="fbits">Длина ключа</label>
+			<select id="bits" name="fbits" class="form-control" placeholder="Бит" title="Выберите длину генерируемого ключа" required>
+				<option>512</option>
+				<option selected>1024</option>
+				<option>2048</option>
+				<option>4096</option>
+			</select>
+        </li>
+	</ul>
+	
+	<h3>Настройки интерфейса</h3>
+	<ul data-role="listview" data-inset="true">
+        <li data-role="fieldcontain">
+            <label for="flip-select">Меня видят другие</label>
+			<select id="flip-select" name="flip-select" data-role="flipswitch">
+				<option>Нет</option>
+				<option>Да</option>
+			</select>
+        </li>
+	</ul>
+	
+	<ul data-role="listview" data-inset="true">
+	<li class="ui-body ui-body-b">
+        <fieldset class="ui-grid-solo">
+            <div class="ui-block-solo">
+				<a href="#page_login" class="ui-btn ui-corner-all ui-btn-a ui-icon-star" data-transition="slide">Применить</a>
+			</div>
+        </fieldset>
+    </li>
+	</ul>
+	
+  </div>
+</div> 
+
+<!-----------------------------------------------------------------------------------------------------------------------------------
+                                                           PAGE: CONTACTS
+------------------------------------------------------------------------------------------------------------------------------------>	
+<div data-role="page" id="page_contacts">
+  <div data-role="header" data-position="fixed">
+	<a href="#page_login" class="ui-btn ui-corner-all ui-shadow ui-icon-star   ui-btn-icon-left"  data-transition="slide"  data-direction="reverse">Ключи</a>
+    <h1>Контакты</h1>
+	<a href="#UserAddPopup" data-rel="popup" data-transition="slideup"  class="ui-btn ui-corner-all ui-shadow ui-icon-search ui-btn-icon-left">Добавить</a>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <form class="ui-filterable">
+      <input id="myFilter" data-type="search" placeholder="Поиск в контактах">
+    </form>
+	<ul id="ui-userlist" data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="false" data-inset="true">
+    </ul>
+  </div>
+	
+	<div data-role="popup" id="UserAddPopup" data-overlay-theme="a" data-theme="a" data-corners="false" data-tolerance="15,15">
+		<a href="#" data-rel="back" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+		<div data-role="main" class="ui-content">
+			<div class="ui-field-contain">
+				<label for="addfname">Псевдоним</label>
+				<input type="text" name="addfname" id="addusername" value="Test">
+			</div>
+			<div class="ui-field-contain">
+				<label for="addfpk">Публичный ключ</label>
+				<textarea name="addfpk" id="adduserpk" wrap="soft"></textarea>
+			</div>
+			<a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-search ui-btn-icon-left" onclick="ui_addUser();">Добавить</a>
+		</div>
+	</div>
+
+  	<div data-role="popup" id="UserPopupMenu" data-theme="a">
+        <ul data-role="listview" data-inset="true" style="min-width:210px;">
+            <li data-role="list-divider">Действия</li>
+            <li><a href="#">Детали</a></li>
+            <li><a href="#">Редактировать</a></li>
+            <li><a href="#">Удалить</a></li>
+		</ul>
+	</div>
+		
+  <div data-role="footer" data-position="fixed">
+    <h1>Footer Text</h1>
+  </div>
+</div> 
+
+
+<div data-role="page" id="page_messages">
+  <div data-role="header" data-position="fixed">
+    <a href="#page_contacts" class="ui-btn ui-corner-all ui-shadow ui-icon-arrow-l ui-btn-icon-left" data-transition="slide" data-direction="reverse">Контакты</a>
+	<h1 id="ui_chat_title">Пользователь</h1>
+  </div>
+  <div data-role="main" class="ui-content">
+    <div class="ui-field-contain">
+		<label for="addfpk">Сообщение</label>
+		<textarea name="addfpk" id="adduserpk" wrap="soft"></textarea>
+	</div>
+	<div id="ui-messages"></div>
+  </div>
+</div>
+
+<div data-role="page" id="page_notsupport">
+  <div data-role="main" class="ui-content">
+    <h1>Браузер не поддерживает технологию HTML5</h1>
+  </div>
+</div>
+
+</body>  
+</html>

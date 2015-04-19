@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Amnesia</title>
+	<!--------------------VENDOR------------------------->
+	<link href="app/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="app/vendor/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+	
+	<!--link href="vendor/jquery/jquery.mobile-1.4.4.min.css" rel="stylesheet">
+	<script language="JavaScript" type="text/javascript" src="vendor/jquery/jquery.mobile-1.4.4.min.js"></script-->
+	
+	<script language="JavaScript" type="text/javascript" src="app/vendor/jquery/jquery-1.11.1.min.js"></script>
+	
+	<script language="JavaScript" type="text/javascript" src="app/vendor/cryptico/cryptico.min.js"></script
+	<!-----------------APPLICATION----------------------->
+	<link href="app/res/css/chat.css" rel="stylesheet">
+	<script language="JavaScript" type="text/javascript" src="app/js/base64.js"></script>
+	<script language="JavaScript" type="text/javascript" src="app/js/app.js"></script>
+</head>
+<body>
+<div id="pError" class="page" style="text-align: center;">
+	<div id="ui_error"></div>
+</div>
+<div id="pLoader" class="page" style="text-align: center;">
+	<div class="container"><br>
+		<div class="panel panel-success">
+			<img src='app/res/img/crypto.png'><br>
+			<div id="ui_status"></div><br>
+			<img src='app/res/img/preloader_2.gif'>
+			<!--div class="progress">
+				<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1" style="width: 100%"></div>
+			</div-->
+		</div>
+	</div>
+</div>
+<div id="pShare" class="page" style="text-align: center;">
+	<div class="container"><br>
+		<div class="panel panel-success">
+		<h3>Ваш ключ RSA 2048 сгенерирован</h3>
+		<a onclick="go('KeyInfo')"><i>Информация о ключе</i></a>
+		</div>
+		<div class="panel panel-info">
+		<div class="container-flyid">
+		<p><h3>Необходимо обменяться публичными частями ключа<br>с собеседником.<br><br>
+		Cообщите собеседнику<br></h3><h2>Связанный с Вашим ключем<br>ПИН код</h2>
+		<div id="ui_pin" style="color:#2020ff;"></div>
+		<i><div id="ui_pinstatus"></div></i>
+		<h3>или введите ПИН код полученный от собеседника</h3>
+		<div class="input-group">
+			<input id="ui_youpin" type="text" class="form-control">
+			<span class="input-group-addon"><span class="glyphicon glyphicon-ok" onclick="getPublicKeyFromPin();"></span></span>
+		</div></p>
+		</div>
+		</div>
+		<!--div class="progress">
+		  <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+			<i><div id="ui_pinstatustime"></div></i>
+		  </div>
+		</div-->
+	</div>
+</div>
+<div id="pDialog" class="page" style="text-align: center;">
+	<div class="chat">
+	<div class="chat_header" style="text-align: right;">
+		<button type="button" class="btn btn-default" onclick="start();">Закрыть</button>
+		<audio id="ui_sound" src="app/res/sound/sound3.mp3" preload="auto"></audio>
+	</div>
+	<div class="chat_content">
+		<div id="ui_content"></div>
+	</div>
+	<div class="chat_footer">
+		<div class="input-group input-group-lg">
+			<span class="input-group-addon"><span class="glyphicon glyphicon-paperclip"></span></span><input id="filefild" class="file" type="file"/>
+			<input type="text" class="form-control" id="ui_message">
+			<span class="input-group-addon" onclick="crypt();"><span class="glyphicon glyphicon-ok"></span></span>
+		</div>
+	</div>
+	</div>
+</div>
+<div id="pKeyInfo" class="page" style="text-align: center;">
+	<div class="container"><br>
+		<div class="panel panel-success">
+			<div class="panel-heading"><h3>Данные о моём ключе</h3></div>
+			<div class="panel-body">
+				<div class="input-group input-group-lg">
+					<label class="form-control">Публичный ключ</label><br>
+					<textarea id="publickey" wrap="soft" class="form-control" readonly></textarea><br>
+					<label class="form-control">Хэш публичного ключа</label><br>
+					<input type="text" id="myHashCod" class="form-control" readonly><br><br>
+					<a onclick="go('Share')"><i>НАЗАД</i></a>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>
+</body>  
+</html>
